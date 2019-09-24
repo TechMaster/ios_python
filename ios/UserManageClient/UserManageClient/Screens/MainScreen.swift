@@ -58,7 +58,6 @@ class MainScreen: UIViewController {
 extension MainScreen: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (self.json == nil) {
-            print("but json is nil")
             return 0
         } else {
             return self.json!.count
@@ -82,5 +81,42 @@ extension MainScreen: UITableViewDataSource {
 }
 
 extension MainScreen: UITableViewDelegate {
-    
+  
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //objects.remove(at: indexPath.row)
+            let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
+            
+            let base_url = Server.shared.baseURL()
+            
+            let record: JSON =  self.json![indexPath.row]
+            let id = record["id"].intValue
+            let parameters: Parameters = [
+                "id": id
+            ]
+
+            Alamofire.request(base_url + "user",
+                              method:.delete,
+                              parameters: parameters,
+                              encoding: URLEncoding.httpBody).responseJSON(queue: queue) { response in
+                switch response.result {
+                case .success(_):
+                    
+                    self.json!.arrayObject?.remove(at: indexPath.row)
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                    
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }            
+            
+            
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
 }
