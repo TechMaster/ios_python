@@ -1,6 +1,0 @@
-framework module Pods_UserManageClient {
-  umbrella header "Pods-UserManageClient-umbrella.h"
-
-  export *
-  module * { export * }
-}
