@@ -14,6 +14,8 @@ class EditScreen: FormViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Edit User"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(onSave))
+        
         form +++ TextRow(){ row in
                 row.title = "Name"
                 row.placeholder = "Enter text here"
@@ -27,11 +29,15 @@ class EditScreen: FormViewController  {
                 row.placeholder = "Password here"
             }
             <<< ImageRow() {
-                $0.title = "Image Row 3"
+                $0.title = "Photo"
                 $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
                 $0.clearAction = .yes(style: .default)
             }
         
+    }
+    
+    @objc func onSave() {
+        print("save")
     }
 }
     

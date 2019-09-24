@@ -71,7 +71,7 @@ extension MainScreen: UITableViewDataSource {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
         let record: JSON =  self.json![indexPath.row]
-       
+        cell?.accessoryType = .disclosureIndicator
         cell?.textLabel?.text = record["name"].stringValue
         cell?.detailTextLabel?.text = record["email"].stringValue
         return cell!
