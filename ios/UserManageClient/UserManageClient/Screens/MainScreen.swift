@@ -83,8 +83,7 @@ extension MainScreen: UITableViewDataSource {
 extension MainScreen: UITableViewDelegate {
   
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            //objects.remove(at: indexPath.row)
+        if editingStyle == .delete {          
             let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
             
             let base_url = Server.shared.baseURL()
@@ -100,15 +99,14 @@ extension MainScreen: UITableViewDelegate {
                               parameters: parameters,
                               encoding: URLEncoding.httpBody).responseJSON(queue: queue) { response in
                 switch response.result {
-                case .success(_):
-                    
-                    self.json!.arrayObject?.remove(at: indexPath.row)
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                case .success(let value):
+                    let bvalue = value as! Bool
+                    if (bvalue==true) {
+                        self.json!.arrayObject?.remove(at: indexPath.row)
+                        DispatchQueue.main.async {
+                            self.tableView.deleteRows(at: [indexPath], with: .fade)
+                        }
                     }
-                    
-                    
                 case .failure(let error):
                     print(error)
                 }
