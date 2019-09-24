@@ -8,5 +8,5 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 cd  DemoRest
-python index.py
+python user_manage.py
 ```
