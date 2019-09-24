@@ -5,4 +5,5 @@ target 'UserManageClient' do
   pod 'SwiftyJSON', '~> 4.0'
   pod 'SteviaLayout'
   pod 'Kingfisher', '~> 5.0'
+  pod 'Eureka'
 end
