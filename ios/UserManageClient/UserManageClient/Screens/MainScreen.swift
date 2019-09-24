@@ -7,13 +7,27 @@
 //
 
 import UIKit
+import Stevia
+import Alamofire
 
 class MainScreen: UIViewController {
-
+    var tableView =  UITableView(frame: CGRect.zero)
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.title = "User Management"
         self.view.backgroundColor = UIColor.white
+        
+        view.sv (
+            tableView
+        )
+        view.layout(
+            |-tableView-|,
+            0
+        )
+        tableView.Top == view.safeAreaLayoutGuide.Top
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationItem.title = "User Management"
     }
     
 
