@@ -6,4 +6,5 @@ target 'UserManageClient' do
   pod 'SteviaLayout'
   pod 'Kingfisher', '~> 5.0'
   pod 'Eureka'
+  pod 'ImageRow', '~> 4.0'
 end

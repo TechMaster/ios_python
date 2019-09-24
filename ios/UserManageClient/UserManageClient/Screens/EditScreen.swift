@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import ImageRow
 class EditScreen: FormViewController  {
 
     override func viewDidLoad() {
@@ -24,6 +25,11 @@ class EditScreen: FormViewController  {
             <<< PasswordRow() {row in
                 row.title = "Pass"
                 row.placeholder = "Password here"
+            }
+            <<< ImageRow() {
+                $0.title = "Image Row 3"
+                $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
+                $0.clearAction = .yes(style: .default)
             }
         
     }
