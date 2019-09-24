@@ -13,31 +13,22 @@ class EditScreen: FormViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Edit User"
-        form +++ Section("Section1")
-            <<< TextRow(){ row in
-                row.title = "Text Row"
+        form +++ TextRow(){ row in
+                row.title = "Name"
                 row.placeholder = "Enter text here"
             }
-            <<< PhoneRow(){
-                $0.title = "Phone Row"
-                $0.placeholder = "And numbers here"
+            <<< EmailRow(){ row in
+                row.title = "Email"
+                row.placeholder = "And email here"
             }
-            +++ Section("Section2")
-            <<< DateRow(){
-                $0.title = "Date Row"
-                $0.value = Date(timeIntervalSinceReferenceDate: 0)
-        }
+            <<< PasswordRow() {row in
+                row.title = "Pass"
+                row.placeholder = "Password here"
+            }
+        
     }
+}
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
-}
