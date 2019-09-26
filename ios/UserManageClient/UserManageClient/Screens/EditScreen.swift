@@ -81,9 +81,14 @@ class EditScreen: FormViewController  {
     // Đoạn này sẽ lưu dữ liệu lên server
     @objc func onSave() {
         form.validate()
-        for row in form.rows {
-            print(row.validationErrors)
+        if form.rows.count > 0 {
+            for row in form.rows {
+                print(row.validationErrors)
+                // Bắn lỗi ở đây
+            }
+            return
         }
+        
         
         let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
         let base_url = Server.shared.baseURL()
@@ -107,9 +112,11 @@ class EditScreen: FormViewController  {
                                     let bvalue = value as! Bool
                                     if bvalue {
                                         print("Update success")
+                                        // Message thành công ở đây
                                     }
                                 case .failure(let error):
                                     print(error)
+                                    // Bắn lỗi ở đây
                                 }
             }
             

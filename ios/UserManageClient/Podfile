@@ -7,4 +7,5 @@ target 'UserManageClient' do
   pod 'Kingfisher', '~> 5.0'
   pod 'Eureka'
   pod 'ImageRow', '~> 4.0'
+  pod 'SwiftMessages'
 end
