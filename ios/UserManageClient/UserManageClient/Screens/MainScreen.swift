@@ -86,7 +86,9 @@ extension MainScreen: UITableViewDelegate {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-        self.navigationController?.pushViewController(EditScreen(), animated: true)
+        let record: JSON =  self.json![indexPath.row]
+        let user = User(record: record)
+        self.navigationController?.pushViewController(EditScreen(user: user), animated: true)
     }
   
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
