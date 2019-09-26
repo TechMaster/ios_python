@@ -14,27 +14,32 @@ class Users:
             "id": 1,
             "name": "Mable Leander",
             "email": "mleander0@squidoo.com",
-            "password": "YtsCnp8IpCL"
+            "password": "YtsCnp8IpCL",
+            "photo": "01.jpg"
         }, {
             "id": 2,
             "name": "Maegan Gaiger",
             "email": "mgaiger1@mysql.com",
-            "password": "VhqSaDfK"
+            "password": "VhqSaDfK",
+            "photo": "02.jpg"
         }, {
             "id": 3,
             "name": "Jon Duke",
             "email": "jduke2@woothemes.com",
-            "password": "LQtlJTI962"
+            "password": "LQtlJTI962",
+            "photo": "03.jpg"
         }, {
             "id": 4,
             "name": "Magdalene Purcell",
             "email": "mpurcell3@taobao.com",
-            "password": "Q4fK89VdR8r"
+            "password": "Q4fK89VdR8r",
+            "photo": "04.jpg"
         }, {
             "id": 5,
             "name": "Arleyne Caveney",
             "email": "acaveney4@elpais.com",
-            "password": "3dZ5DuSRck"
+            "password": "3dZ5DuSRck",
+            "photo": "05.jpg"
         }]
 
     def get_all_users(self):
@@ -144,4 +149,5 @@ https://stackoverflow.com/questions/26723467/what-is-the-difference-between-form
 '''
 
 if __name__ == "__main__":
+    app.static('/photo', './uploads')
     app.run(host="0.0.0.0", port=8000)

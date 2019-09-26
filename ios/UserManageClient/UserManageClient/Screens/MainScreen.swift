@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 import Alamofire
 import SwiftyJSON
-
+import Kingfisher
 
 class MainScreen: UIViewController {
     var tableView =  UITableView(frame: CGRect.zero)
@@ -90,6 +90,8 @@ extension MainScreen: UITableViewDataSource {
         cell?.accessoryType = .disclosureIndicator
         cell?.textLabel?.text = record["name"].stringValue
         cell?.detailTextLabel?.text = record["email"].stringValue
+        let url = URL(string: Server.shared.baseURL() + "photo/" + record["photo"].stringValue)
+        cell?.imageView?.kf.setImage(with: url)
         return cell!
     }
     
