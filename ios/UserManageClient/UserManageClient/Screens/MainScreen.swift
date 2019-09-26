@@ -20,6 +20,8 @@ class MainScreen: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "User Management"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .done, target: self, action: #selector(AddNew))
+        
         view.sv (
             tableView
         )
@@ -30,6 +32,10 @@ class MainScreen: UIViewController {
         tableView.Top == view.safeAreaLayoutGuide.Top
         tableView.dataSource = self
         tableView.delegate = self
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: UIControl.Event.valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +52,7 @@ class MainScreen: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 
             case .failure(let error):
@@ -53,8 +60,17 @@ class MainScreen: UIViewController {
             }
         }
     }
+    
+    @objc func AddNew() {
+        self.navigationController?.pushViewController(EditScreen(), animated: true)
+    }
+    
+    @objc func onRefresh() {
+        getDataReloadTableView()
+    }
 }
 
+//---------------------------------------------------------
 extension MainScreen: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (self.json == nil) {
