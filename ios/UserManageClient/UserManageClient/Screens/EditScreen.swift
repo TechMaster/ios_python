@@ -84,13 +84,36 @@ class EditScreen: FormViewController  {
         for row in form.rows {
             print(row.validationErrors)
         }
+        
+        let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
+        let base_url = Server.shared.baseURL()
+        
+        
         let valuesDictionary = form.values()
         
         if editMode {
+            let parameters: Parameters = [
+                "id": user.id,
+                "name": valuesDictionary["name"]! ?? "",
+                "email": valuesDictionary["email"]! ?? "",
+                "password": valuesDictionary["password"]! ?? ""
+            ]
+            Alamofire.request(base_url + "user",
+                              method:.put,
+                              parameters: parameters,
+                              encoding: URLEncoding.httpBody).responseJSON(queue: queue) { response in
+                                switch response.result {
+                                case .success(let value):
+                                    let bvalue = value as! Bool
+                                    if bvalue {
+                                        print("Update success")
+                                    }
+                                case .failure(let error):
+                                    print(error)
+                                }
+            }
             
         } else {
-            let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
-            let base_url = Server.shared.baseURL()
             let parameters: Parameters = [
                 "name": valuesDictionary["name"]! ?? "",
                 "email": valuesDictionary["email"]! ?? "",
