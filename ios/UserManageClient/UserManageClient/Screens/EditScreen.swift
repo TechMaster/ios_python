@@ -10,6 +10,7 @@ import UIKit
 import Eureka
 import ImageRow
 import Alamofire
+import SwiftMessages
 
 class EditScreen: FormViewController  {
     var user: User!
@@ -40,6 +41,11 @@ class EditScreen: FormViewController  {
             row.placeholder = "Enter text here"
             row.add(rule: RuleRequired())
             row.validationOptions = .validatesOnDemand
+            row.cellUpdate { cell, row in
+                if !row.isValid {
+                    cell.titleLabel?.textColor = .red
+                }
+            }
             }
             <<< EmailRow(){ row in
                 row.tag = "email"
@@ -48,6 +54,11 @@ class EditScreen: FormViewController  {
                 row.add(rule: RuleRequired())
                 row.add(rule: RuleEmail())
                 row.validationOptions = .validatesOnDemand
+                row.cellUpdate { cell, row in
+                    if !row.isValid {
+                        cell.titleLabel?.textColor = .red
+                    }
+                }
             }
             <<< PasswordRow() {row in
                 row.tag = "password"
@@ -55,6 +66,11 @@ class EditScreen: FormViewController  {
                 row.placeholder = "Password here"
                 row.add(rule: RuleRequired())
                 row.validationOptions = .validatesOnDemand
+                row.cellUpdate { cell, row in
+                    if !row.isValid {
+                        cell.titleLabel?.textColor = .red
+                    }
+                }
             }
             <<< ImageRow() {
                 $0.tag = "photo"
@@ -81,15 +97,14 @@ class EditScreen: FormViewController  {
     // Đoạn này sẽ lưu dữ liệu lên server
     @objc func onSave() {
         form.validate()
-        if form.rows.count > 0 {
-            for row in form.rows {
-                print(row.validationErrors)
-                // Bắn lỗi ở đây
+        
+        for row in form.rows {
+            if row.validationErrors.count > 0 {
+                row.updateCell()
+                SwiftMessageExtra.showWarnMessage(theme: .warning, title: "Lỗi", body: "Hãy nhập đủ dữ liệu")
+                return
             }
-            return
         }
-        
-        
         let queue = DispatchQueue(label: "vn.techmaster.api", qos: .background, attributes: .concurrent)
         let base_url = Server.shared.baseURL()
         
@@ -111,8 +126,9 @@ class EditScreen: FormViewController  {
                                 case .success(let value):
                                     let bvalue = value as! Bool
                                     if bvalue {
-                                        print("Update success")
-                                        // Message thành công ở đây
+                                        DispatchQueue.main.async {                                             self.navigationController?.popViewController(animated: true)
+                                        }
+                                       
                                     }
                                 case .failure(let error):
                                     print(error)
@@ -134,6 +150,8 @@ class EditScreen: FormViewController  {
                                 case .success(let value):
                                     let new_id = value as! Int
                                     print(new_id)
+                                    DispatchQueue.main.async {                                             self.navigationController?.popViewController(animated: true)
+                                    }
                                     
                                 case .failure(let error):
                                     print(error)
