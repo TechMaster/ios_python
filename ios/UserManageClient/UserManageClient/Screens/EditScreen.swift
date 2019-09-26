@@ -11,6 +11,8 @@ import Eureka
 import ImageRow
 class EditScreen: FormViewController  {
     var user: User!
+    
+    // Constructor trong trường hợp có user truyền vào, nếu là Add New thì không dùng
     init(user: User) {
         super.init(style: UITableView.Style.grouped)
         self.user = user
@@ -49,12 +51,17 @@ class EditScreen: FormViewController  {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        form.rowBy(tag: "Name")?.value = user.name
-        form.rowBy(tag: "Email")?.value = user.email
-        form.rowBy(tag: "Pass")?.value = user.pass
+        if user != nil {
+            form.rowBy(tag: "Name")?.value = user.name
+            form.rowBy(tag: "Email")?.value = user.email
+            form.rowBy(tag: "Pass")?.value = user.pass
+        }
+        
     }
     
-    @objc func onSave() {        
+    
+    // Đoạn này sẽ lưu dữ liệu lên server
+    @objc func onSave() {
         let valuesDictionary = form.values()
         print(valuesDictionary)
        

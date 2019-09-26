@@ -86,8 +86,12 @@ extension MainScreen: UITableViewDelegate {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
+        
+        //Lấy JSON record ở dòng được chọn
         let record: JSON =  self.json![indexPath.row]
+        //Chuyển nó thành đối tượng user
         let user = User(record: record)
+        //Truyền sang màn hình EditScreen
         self.navigationController?.pushViewController(EditScreen(user: user), animated: true)
     }
   

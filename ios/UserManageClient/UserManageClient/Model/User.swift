@@ -8,12 +8,16 @@
 
 import Foundation
 import SwiftyJSON
+
+// Tạo class User để mô hình dữ liệu chuyển từ JSON sang class trong Swift
 class User {
     var id: Int
     var name: String
     var email: String
     var pass: String
     //var photo: UIImage
+    
+    //Contrustor nhận vào một đối tượng JSON
     init(record: JSON) {
         id = record["id"].intValue
         name = record["name"].stringValue
